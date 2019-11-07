@@ -1,5 +1,5 @@
 import pathlib
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # The directory containing this file
 HERE = pathlib.Path(__file__).parent
@@ -26,10 +26,10 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    packages=['paytm'],
+    packages=find_packages(include=('paytm*', )),
     include_package_data=True,
     install_requires=['django', 'djangorestframework'],
-    download_url='https://github.com/Faisal-Manzer/django-paytm-checkout/archive/Python.tar.gz',
+    download_url='https://github.com/Faisal-Manzer/django-paytm-checkout/archive/0.0.1.tar.gz',
     entry_points={
     },
 )
