@@ -12,3 +12,6 @@ secrets.json
 db.sqlite3
 checkout
 manage.py
+build
+dist
+django_paytm_checkout.egg-info
