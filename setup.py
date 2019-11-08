@@ -10,7 +10,7 @@ README = (HERE / 'README.md').read_text()
 # This call to setup() does all the work
 setup(
     name='django-paytm-checkout',
-    version='0.0.1',
+    version='0.0.2',
     description='A simple and modular django app to help with Paytm checkout and custom checkout',
     long_description=README,
     long_description_content_type='text/markdown',
@@ -26,7 +26,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    packages=find_packages(include=('paytm*', )),
+    packages=find_packages(include=('paytm*',)),
     include_package_data=True,
     install_requires=['django', 'djangorestframework'],
     download_url='https://github.com/Faisal-Manzer/django-paytm-checkout/archive/0.0.1.tar.gz',
