@@ -1,4 +1,6 @@
 """Only to getting configuration set in project's settings.py"""
+__all__ = ['Configuration']
+
 from django.conf import settings as django_settings
 
 from paytm.exceptions import IncorrectConfiguration
@@ -9,6 +11,10 @@ class Configuration(object):
 
     MID = ''
     KEY = ''
+
+    TEST_MID = ''
+    TEST_KEY = ''
+
     INDUSTRY = 'Retail'
     WEBSITE = 'WEBSTAGING'
     DEBUG = True
@@ -17,11 +23,17 @@ class Configuration(object):
     CHANNEL_MOBILE_APP = 'WAP'
     STAGING_DOMAIN = 'securegw-stage.paytm.in'
     PRODUCTION_DOMAIN = 'securegw.paytm.in'
+    TRANSACTION_CHARGE = 1.75
+    GST = 18
 
     settings_mapping = {
         # Key: (attr, type, required, defaults)
         'PAYTM_MERCHANT_ID': ('MID', str, True, MID),
         'PAYTM_MERCHANT_KEY': ('KEY', str, True, KEY),
+
+        'PAYTM_TEST_MERCHANT_ID': ('TEST_MID', str, True, TEST_MID),
+        'PAYTM_TEST_MERCHANT_KEY': ('TEST_KEY', str, True, TEST_MID),
+
         'PAYTM_INDUSTRY': ('INDUSTRY', str, True, INDUSTRY),
         'PAYTM_WEBSITE': ('WEBSITE', str, True, WEBSITE),
 
@@ -31,7 +43,9 @@ class Configuration(object):
         'PAYTM_CHANNEL_MOBILE_APP': ('CHANNEL_MOBILE_APP', str, False, CHANNEL_MOBILE_APP),
 
         'PAYTM_STAGING_DOMAIN': ('STAGING_DOMAIN', str, False, STAGING_DOMAIN),
-        'PAYTM_PRODUCTION_DOMAIN': ('PRODUCTION_DOMAIN', str, False, PRODUCTION_DOMAIN)
+        'PAYTM_PRODUCTION_DOMAIN': ('PRODUCTION_DOMAIN', str, False, PRODUCTION_DOMAIN),
+
+        'PAYTM_TRANSACTION_CHARGE': ('TRANSACTION_CHARG', float, False, TRANSACTION_CHARGE),
     }
 
     def __init__(self):
@@ -45,6 +59,9 @@ class Configuration(object):
 
         if self.DEBUG:
             self.DOMAIN = self.STAGING_DOMAIN
+            self.MID = self.TEST_MID
+            self.KEY = self.TEST_KEY
+            self.WEBSITE = 'WEBSTAGING'
         else:
             self.DOMAIN = self.PRODUCTION_DOMAIN
 

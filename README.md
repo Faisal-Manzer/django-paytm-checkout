@@ -1,6 +1,9 @@
 # Django Paytm Checkout
 A simple modular approach for Paytm's [checkout][paytm-checkout] and [custom checkout][paytm-custom-checkout]
 
+### Documentation is yet to be done
+### This is currently in beta phase
+
 ## Installation
 Use pip to install from PyPI:
 ```shell script
@@ -40,6 +43,39 @@ from django.urls import path, include
 urlpatterns = [
     path('paytm/', include('paytm.urls', namespace='paytm')),
 ]
+```
+
+### Customising views
+You can override all the Generic custom views
+
+ex: Customising and using the initiate view
+```python
+from django.conf import settings as django_settings
+from django.shortcuts import render, Http404
+
+from paytm.checkout.views import GenericInitiatePaymentView
+from paytm.models import Item
+
+
+class InitiatePaymentView(GenericInitiatePaymentView):
+    """Wrapper for testing"""
+    include_payment_charge = False
+    channel = 'WEB'
+
+    def get_amount(self):
+        item_id = self.request.POST['item']
+        item = Item.objects.get(pk=item_id)
+        return item.price
+
+    def get(self, request):
+        if not django_settings.DEBUG:
+            raise Http404
+
+        self.request = request
+        return render(request, 'paytm/checkout/index.html', {
+            'items': Item.objects.all()
+        })
+
 ```
 
 ---
